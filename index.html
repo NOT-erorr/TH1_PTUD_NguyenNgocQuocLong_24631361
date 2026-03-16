@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="images/icon.png">
+    <title>Hồ sơ sinh viên - Nguyễn Ngọc Quốc Long</title>
+</head>
+
+<body>
+    <button id="lang-toggle" class="lang-toggle" type="button" aria-label="Chuyển đổi ngôn ngữ">English</button>
+    <div class="avatar">
+        <!-- Ảnh đại diện -->
+        <img id="avatar-img" src="images/avatar.jpg" alt="Ảnh đại diện của Nguyễn Ngọc Quốc Long">
+    </div>
+    <table class="profile-card">
+        <!-- Họ tên -->
+        <tr id="full-name">
+            <td colspan="2">
+                <h1>Nguyễn Ngọc Quốc Long</h1>
+            </td>
+        </tr>
+
+        <!-- Mã sinh viên (ẩn, chỉ hiển thị trong mã nguồn) -->
+        <tr id="student-id" style="display: none;">
+            <td colspan="2">243631361</td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <p class="tagline" data-i18n="tagline">Sinh viên KHDL · Đam mê AI & Lập trình & Tài chính · Member of AI Club</p>
+            </td>
+        </tr>
+
+        <!-- Information -->
+        <tr class="info-row">
+            <td><strong id="label-email" data-i18n="labelEmail">Email:</strong></td>
+            <td id="email">nguyenlong9200@gmail.com</td>
+        </tr>
+        <tr class="info-row">
+            <td><strong id="label-birthdate" data-i18n="labelBirthdate">Ngày sinh:</strong></td>
+            <td id="birthdate">17/09/2006</td>
+        </tr>
+        <tr class="info-row">
+            <td><strong id="label-class" data-i18n="labelClass">Lớp:</strong></td>
+            <td id="class">KHDL20A</td>
+        </tr>
+        <tr class="info-row">
+            <td><strong id="label-school" data-i18n="labelSchool">Trường:</strong></td>
+            <td id="school">Trường Đại học Công nghiệp thành phố Hồ Chí Minh - IUH</td>
+        </tr>
+        <!-- Liên kết -->
+        <tr class="links">
+            <td colspan="2">
+                <strong id="label-links" data-i18n="labelLinks">Liên kết:</strong>
+                <ul id="links-list">
+
+                    <li><a id="link" href="https://github.com/NOT-erorr" target="_blank">GitHub</a></li>
+                    <li><a id="link" href="https://www.linkedin.com/in/quoclongdavid/" target="_blank">LinkedIn</a></li>
+                </ul>
+            </td>
+        </tr>
+        <!-- Sở thích -->
+        <tr class="hobbies-section">
+            <td colspan="2">
+                <strong id="label-hobbies" data-i18n="labelHobbies">Sở thích:</strong>
+                <ul id="hobbies">
+                    <li data-i18n="hobbyAi">Nghiên cứu AI</li>
+                    <li data-i18n="hobbyCoding">Lập trình</li>
+                    <li data-i18n="hobbyReading">Đọc sách</li>
+                    <li data-i18n="hobbySports">Thể thao</li>
+                </ul>
+                </div>
+    </table>
+
+    <script>
+        const translations = {
+            vi: {
+                pageTitle: 'Hồ sơ sinh viên - Nguyễn Ngọc Quốc Long',
+                avatarAlt: 'Ảnh đại diện của Nguyễn Ngọc Quốc Long',
+                toggleButton: 'English',
+                toggleAria: 'Chuyển đổi ngôn ngữ',
+                tagline: 'Sinh viên KHDL · Đam mê AI & Lập trình & Tài chính · Member of AI Club',
+                labelEmail: 'Email:',
+                labelBirthdate: 'Ngày sinh:',
+                labelClass: 'Lớp:',
+                labelSchool: 'Trường:',
+                labelLinks: 'Liên kết:',
+                labelHobbies: 'Sở thích:',
+                hobbyAi: 'Nghiên cứu AI',
+                hobbyCoding: 'Lập trình',
+                hobbyReading: 'Đọc sách',
+                hobbySports: 'Thể thao'
+            },
+            en: {
+                pageTitle: 'Student Profile - Nguyen Ngoc Quoc Long',
+                avatarAlt: 'Profile picture of Nguyen Ngoc Quoc Long',
+                toggleButton: 'Tiếng Việt',
+                toggleAria: 'Switch language',
+                tagline: 'Data Science student · Passionate about AI, programming and finance · Member of AI Club',
+                labelEmail: 'Email:',
+                labelBirthdate: 'Date of birth:',
+                labelClass: 'Class:',
+                labelSchool: 'University:',
+                labelLinks: 'Links:',
+                labelHobbies: 'Hobbies:',
+                hobbyAi: 'AI research',
+                hobbyCoding: 'Coding',
+                hobbyReading: 'Reading books',
+                hobbySports: 'Sports'
+            }
+        };
+
+        const langToggleBtn = document.getElementById('lang-toggle');
+        const translatableElements = document.querySelectorAll('[data-i18n]');
+        const avatarImage = document.getElementById('avatar-img');
+
+        function applyLanguage(lang) {
+            const selected = translations[lang];
+            if (!selected) {
+                return;
+            }
+
+            document.documentElement.lang = lang;
+            document.title = selected.pageTitle;
+            avatarImage.alt = selected.avatarAlt;
+            langToggleBtn.textContent = selected.toggleButton;
+            langToggleBtn.setAttribute('aria-label', selected.toggleAria);
+
+            translatableElements.forEach((element) => {
+                const key = element.getAttribute('data-i18n');
+                if (selected[key]) {
+                    element.textContent = selected[key];
+                }
+            });
+        }
+
+        const savedLanguage = localStorage.getItem('siteLanguage');
+        let currentLanguage = savedLanguage === 'en' ? 'en' : 'vi';
+        applyLanguage(currentLanguage);
+
+        langToggleBtn.addEventListener('click', () => {
+            currentLanguage = currentLanguage === 'vi' ? 'en' : 'vi';
+            applyLanguage(currentLanguage);
+            localStorage.setItem('siteLanguage', currentLanguage);
+        });
+    </script>
+</body>
+
+</html>
